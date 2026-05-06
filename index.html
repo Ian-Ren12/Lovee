@@ -38,6 +38,7 @@
             font-weight: bold;
             text-align: center;
             animation: pulse 1.5s infinite;
+            cursor: pointer; /* FIXED */
         }
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
@@ -56,7 +57,6 @@
             transition: all 1.2s ease;
             box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
         }
-        /* FIXED: Moved petals further away */
         .flower-container.opened .petal {
             transform: rotate(calc(var(--i) * 60deg)) translate(80px, -140px) scale(2);
             opacity: 0.8;
@@ -72,13 +72,13 @@
             opacity: 0;
             transform: scale(0.5) translateY(50px);
             transition: all 1s ease 0.5s;
-            z-index: 15; /* HIGHER Z-INDEX to stay on top */
+            z-index: 15;
         }
         .message-box.show {
             opacity: 1;
             transform: scale(1) translateY(0);
         }
-        /* CLOSING DESIGN */
+        /* FIXED BUTTON FOR MOBILE */
         .love-button {
             margin-top: 25px;
             padding: 15px 30px;
@@ -91,7 +91,10 @@
             opacity: 0;
             transform: translateY(30px);
             transition: all 1s ease 2s;
-            cursor: pointer;
+            cursor: pointer; /* VERY IMPORTANT FOR PHONE */
+            z-index: 999; /* SUPER HIGH SO NOTHING COVERS IT */
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
         .love-button.show {
             opacity: 1;
@@ -111,13 +114,12 @@
             opacity: 0;
             transform: scale(0);
             transition: all 1s ease;
-            z-index: 20;
+            z-index: 9999;
         }
         .final-text.show {
             opacity: 1;
             transform: scale(1.2);
         }
-        /* Falling Elements */
         .falling {
             position: absolute;
             font-size: 30px;
@@ -133,12 +135,10 @@
 
     <div id="bg" class="absolute w-full h-full pointer-events-none"></div>
 
-    <!-- Final Big Text -->
     <div id="finalText" class="final-text">
         HINLAYDAK KA! 💖
     </div>
 
-    <!-- The Flower -->
     <div id="flower" class="flower-container" onclick="openFlower()">
         <div class="center-btn">OPEN ME 🌹</div>
         <div class="petal" style="--i:0"></div>
@@ -149,7 +149,6 @@
         <div class="petal" style="--i:5"></div>
     </div>
 
-    <!-- The Message -->
     <div id="message" class="message-box">
         <h2 class="text-2xl font-bold text-pink-500 mb-2">Umja ka nan hanadah ku ❤️</h2>
         <h3 class="text-xl text-pink-400 mb-6">Bogboddah nan Arapah</h3>
@@ -166,14 +165,12 @@
             Ayyamen tuh hayhay.
         </p>
 
-        <!-- THE CLOSING BUTTON -->
         <div id="loveBtn" class="love-button" onclick="showLove()">
             💖 TAP HERE FOR SURPRISE 💖
         </div>
     </div>
 
     <script>
-        // Falling flowers animation
         function createFalling() {
             const bg = document.getElementById('bg');
             const items = ['🌸', '🌹', '🌷', '💖', '💗', '✨', '💓'];
@@ -188,7 +185,6 @@
             }, 250);
         }
 
-        // Open flower function
         function openFlower() {
             document.getElementById('flower').classList.add('opened');
             setTimeout(() => {
@@ -198,7 +194,6 @@
             }, 1200);
         }
 
-        // Show final Love message
         function showLove() {
             document.getElementById('finalText').classList.add('show');
             setTimeout(() => {
